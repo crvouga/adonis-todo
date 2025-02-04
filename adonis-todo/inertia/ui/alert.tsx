@@ -6,7 +6,13 @@ export interface AlertProps {
 
 export function Alert({ message, variant, className = '' }: AlertProps) {
   return (
-    <div role="alert" aria-live="polite" className={`alert alert-${variant} ${className}`}>
+    <div
+      role="alert"
+      aria-live="polite"
+      aria-label={variant.charAt(0).toUpperCase() + variant.slice(1)}
+      data-testid={`alert-${variant}`}
+      className={`alert alert-${variant} ${className}`}
+    >
       <svg
         xmlns="http://www.w3.org/2000/svg"
         className="stroke-current shrink-0 h-6 w-6"
