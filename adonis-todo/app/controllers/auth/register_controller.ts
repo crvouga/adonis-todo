@@ -6,7 +6,7 @@ import { DateTime } from 'luxon'
 import { createHash } from 'node:crypto'
 
 @inject()
-export default class RegistersController {
+export default class RegisterController {
   constructor(protected logger: Logger) {}
 
   async respond(ctx: HttpContext) {

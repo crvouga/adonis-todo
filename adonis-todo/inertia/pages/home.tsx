@@ -1,4 +1,4 @@
-import { Head } from '@inertiajs/react'
+import { Head, useForm } from '@inertiajs/react'
 import { Button } from '~/ui/button'
 
 export default function Home() {
@@ -12,7 +12,7 @@ export default function Home() {
           <a className="btn btn-ghost normal-case text-xl">Todo</a>
         </div>
         <div className="flex-none gap-2">
-          <Button color="ghost">Logout</Button>
+          <LogoutButton />
         </div>
       </div>
 
@@ -25,5 +25,22 @@ export default function Home() {
         </div>
       </footer>
     </>
+  )
+}
+
+function LogoutButton() {
+  const { post, processing } = useForm()
+  return (
+    <form
+      method="POST"
+      onSubmit={(e) => {
+        e.preventDefault()
+        post('/logout')
+      }}
+    >
+      <Button color="ghost" type="submit" disabled={processing}>
+        Logout
+      </Button>
+    </form>
   )
 }
