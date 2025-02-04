@@ -6,10 +6,8 @@ test.group('Auth register', () => {
     response.assertStatus(200)
   })
 
-  test('should display register form', async ({ browser }) => {
-    const page = await browser.newPage()
-    await page.goto('http://localhost:3333/register')
-
+  test('should display register form', async ({ visit }) => {
+    const page = await visit('/register')
     await page.assertExists('form')
     await page.assertExists('input[type="email"]')
     await page.assertExists('input[type="password"]')
@@ -17,9 +15,8 @@ test.group('Auth register', () => {
     await page.assertExists('button[type="submit"]')
   })
 
-  test('should register without errors', async ({ browser }) => {
-    const page = await browser.newPage()
-    await page.goto('http://localhost:3333/register')
+  test('should register without errors', async ({ visit }) => {
+    const page = await visit('/register')
 
     // Generate unique email using timestamp
     const uniqueEmail = `test-${Date.now()}@example.com`
@@ -37,12 +34,8 @@ test.group('Auth register', () => {
     await page.assertNotExists('[role="alert"][aria-label="Error"]')
   })
 
-  test('should redirect to home page after successful registration', async ({
-    browser,
-    expect,
-  }) => {
-    const page = await browser.newPage()
-    await page.goto('http://localhost:3333/register')
+  test('should redirect to home page after successful registration', async ({ expect, visit }) => {
+    const page = await visit('/register')
 
     const uniqueEmail = `test-${Date.now()}@example.com`
 
@@ -54,7 +47,7 @@ test.group('Auth register', () => {
     await page.locator('button[type="submit"]').click()
 
     // Assert redirect to login page
-    await page.waitForURL('http://localhost:3333/home')
-    expect(page.url()).toBe('http://localhost:3333/home')
+    await page.waitForURL('/home')
+    expect(page.url()).toBe('/home')
   })
 })

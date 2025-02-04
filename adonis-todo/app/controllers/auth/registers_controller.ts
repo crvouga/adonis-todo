@@ -1,8 +1,14 @@
 import type { HttpContext } from '@adonisjs/core/http'
 import { createHash } from 'node:crypto'
 import db from '@adonisjs/lucid/services/db'
+import { inject } from '@adonisjs/core'
+import { Logger } from '@adonisjs/core/logger'
+import User from '#models/user'
 
+@inject()
 export default class RegistersController {
+  constructor(protected logger: Logger) {}
+
   async respond(ctx: HttpContext) {
     const { email, password, passwordConfirmation } = ctx.request.body()
 
@@ -17,17 +23,24 @@ export default class RegistersController {
       const hashedPassword = createHash('sha256').update(password).digest('hex')
 
       // Create user
-      await db.table('users').insert({
+      const [userId] = await db.table('users').insert({
         email,
         password: hashedPassword,
         created_at: new Date(), // Add created_at timestamp
       })
 
-      // Redirect to login
+      // Login the user
+      const user = await User.find(userId)
+      if (!user) {
+        throw new Error('User not found')
+      }
+      await ctx.auth.use('web').login(user)
+
+      // Redirect to home
       return ctx.response.redirect('/home')
     } catch (error) {
       // Log the full error for debugging
-      console.error('Registration error:', {
+      this.logger.error('Registration error:', {
         error: error,
         message: error.message,
         code: error.code,
