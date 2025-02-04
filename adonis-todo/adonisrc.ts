@@ -64,17 +64,18 @@ export default defineConfig({
       {
         files: ['tests/unit/**/*.spec(.ts|.js)'],
         name: 'unit',
-        timeout: 2000,
+        timeout: 2 * 1000, // 2 seconds
       },
       {
         files: ['tests/functional/**/*.spec(.ts|.js)'],
         name: 'functional',
-        timeout: 30000,
+        timeout: 30 * 1000, // 30 seconds
       },
       {
         files: ['tests/browser/**/*.spec(.ts|.js)'],
         name: 'browser',
-        timeout: 300000,
+        // timeout: 5 * 60 * 1000, // 5 minutes
+        timeout: 2 * 1000,
       },
     ],
     forceExit: false,

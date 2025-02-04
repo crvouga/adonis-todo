@@ -1,9 +1,9 @@
-import type { HttpContext } from '@adonisjs/core/http'
-import { createHash } from 'node:crypto'
-import db from '@adonisjs/lucid/services/db'
-import { inject } from '@adonisjs/core'
-import { Logger } from '@adonisjs/core/logger'
 import User from '#models/user'
+import { inject } from '@adonisjs/core'
+import type { HttpContext } from '@adonisjs/core/http'
+import { Logger } from '@adonisjs/core/logger'
+import { DateTime } from 'luxon'
+import { createHash } from 'node:crypto'
 
 @inject()
 export default class RegistersController {
@@ -23,28 +23,26 @@ export default class RegistersController {
       const hashedPassword = createHash('sha256').update(password).digest('hex')
 
       // Create user
-      const [userId] = await db.table('users').insert({
+      const user = await User.create({
         email,
         password: hashedPassword,
-        created_at: new Date(), // Add created_at timestamp
+        createdAt: DateTime.now(),
       })
 
       // Login the user
-      // const user = await User.find(userId)
-      // if (!user) {
-      //   throw new Error('User not found')
-      // }
-      // await ctx.auth.use('web').login(user)
+      await ctx.auth.use('web').login(user)
 
       // Redirect to home
       return ctx.response.redirect('/home')
     } catch (error) {
       // Log the full error for debugging
-      this.logger.error('Registration error:', {
-        error: error,
+      const errorDetails = JSON.stringify(error, Object.getOwnPropertyNames(error))
+      console.error('Registration error:', {
+        error: error.toString(),
         message: error.message,
         code: error.code,
         stack: error.stack,
+        details: errorDetails,
       })
 
       // Check if error is due to duplicate email
