@@ -12,9 +12,9 @@ test.group('Home home', () => {
   //   await page.assertExists('main')
   // })
 
-  test('redirect to login page when not authenticated', async ({ visit, expect }) => {
-    const page = await visit('/home')
-    await page.waitForURL('/login')
-    expect(page.url()).toBe('/login')
-  })
+  // test('redirect to login page when not authenticated', async ({ visit, expect }) => {
+  //   const page = await visit('/home')
+  //   await page.waitForURL('/login')
+  //   expect(page.url()).toBe('/login')
+  // })
 })

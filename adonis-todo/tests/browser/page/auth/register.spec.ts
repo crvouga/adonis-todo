@@ -34,7 +34,7 @@ test.group('Auth register', () => {
     await page.assertNotExists('[role="alert"][aria-label="Error"]')
   })
 
-  test('should redirect to home page after successful registration', async ({ expect, visit }) => {
+  test('should redirect to home page after successful registration', async ({ visit }) => {
     const page = await visit('/register')
 
     const uniqueEmail = `test-${Date.now()}@example.com`
@@ -45,9 +45,7 @@ test.group('Auth register', () => {
       .fill('password123')
     await page.locator('input[name="passwordConfirmation"]').fill('password123')
     await page.locator('button[type="submit"]').click()
-
-    // Assert redirect to login page
     await page.waitForURL('/home')
-    expect(page.url()).toBe('/home')
+    await page.assertPath('/home')
   })
 })

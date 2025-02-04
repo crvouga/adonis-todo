@@ -30,11 +30,11 @@ export default class RegistersController {
       })
 
       // Login the user
-      const user = await User.find(userId)
-      if (!user) {
-        throw new Error('User not found')
-      }
-      await ctx.auth.use('web').login(user)
+      // const user = await User.find(userId)
+      // if (!user) {
+      //   throw new Error('User not found')
+      // }
+      // await ctx.auth.use('web').login(user)
 
       // Redirect to home
       return ctx.response.redirect('/home')
