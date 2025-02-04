@@ -6,6 +6,7 @@ import { assert } from '@japa/assert'
 import { browserClient } from '@japa/browser-client'
 import { expect } from '@japa/expect'
 import { pluginAdonisJS } from '@japa/plugin-adonisjs'
+import { authBrowserClient } from '@adonisjs/auth/plugins/browser_client'
 import type { Config } from '@japa/runner/types'
 
 /**
@@ -25,6 +26,7 @@ export const plugins: Config['plugins'] = [
   expect(),
   pluginAdonisJS(app),
   sessionBrowserClient(app),
+  authBrowserClient(app),
 ]
 
 /**
