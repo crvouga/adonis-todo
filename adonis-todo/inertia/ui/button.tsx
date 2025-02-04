@@ -1,6 +1,6 @@
 export interface ButtonProps {
   type?: 'button' | 'submit' | 'reset'
-  color?: 'primary' | 'secondary' | 'accent' | 'info' | 'success' | 'warning' | 'error'
+  color?: 'primary' | 'secondary' | 'accent' | 'info' | 'success' | 'warning' | 'error' | 'ghost'
   className?: string
   disabled?: boolean
   children: React.ReactNode

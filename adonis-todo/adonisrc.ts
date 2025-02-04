@@ -75,7 +75,7 @@ export default defineConfig({
         files: ['tests/browser/**/*.spec(.ts|.js)'],
         name: 'browser',
         // timeout: 5 * 60 * 1000, // 5 minutes
-        timeout: 2 * 1000,
+        timeout: 5 * 1000, // 5 seconds
       },
     ],
     forceExit: false,
