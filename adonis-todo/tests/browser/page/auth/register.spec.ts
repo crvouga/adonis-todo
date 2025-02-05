@@ -18,7 +18,6 @@ test.group('Auth register', () => {
   test('should register without errors', async ({ visit }) => {
     const page = await visit('/register')
 
-    // Generate unique email using timestamp
     const uniqueEmail = `test-${Date.now()}@example.com`
 
     await page.locator('input[type="email"]').fill(uniqueEmail)

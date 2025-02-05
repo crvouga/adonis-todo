@@ -2,16 +2,16 @@ import { Head, useForm } from '@inertiajs/react'
 import { Alert } from '~/ui/alert'
 import { Button } from '~/ui/button'
 import { TextField } from '~/ui/text_field'
-import { REGISTER_ERROR_CODE, toRegisterErrorMessage } from '#controllers/auth/register_controller'
+import { RegisterErrorCode } from '#shared/auth/register_error_code'
 
-export default function Register(props: { errorColor?: keyof typeof REGISTER_ERROR_CODE | null }) {
+export default function Register(props: { errorColor?: RegisterErrorCode | null }) {
   const { data, setData, post, processing } = useForm({
     email: '',
     password: '',
     passwordConfirmation: '',
   })
 
-  const errorMessage = props.errorColor ? toRegisterErrorMessage(props.errorColor) : null
+  const errorMessage = props.errorColor ? RegisterErrorCode.toMessage(props.errorColor) : null
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()

@@ -1,7 +1,7 @@
 import { test } from '@japa/runner'
-import { REGISTER_ERROR_CODE } from '#controllers/auth/register_controller'
 import User from '#models/user'
 import { DateTime } from 'luxon'
+import { RegisterErrorCode } from '#shared/auth/register_error_code'
 
 test.group('Auth register', () => {
   test('should render register page', async ({ client }) => {
@@ -24,7 +24,9 @@ test.group('Auth register', () => {
     })
     response.assertStatus(200)
     response.assertInertiaComponent('auth/register')
-    response.assertInertiaPropsContains({ errorCode: REGISTER_ERROR_CODE.EMAIL_TAKEN })
+    response.assertInertiaPropsContains({
+      errorCode: RegisterErrorCode.REGISTER_ERROR_CODE.EMAIL_TAKEN,
+    })
   })
 
   test('should render error for password mismatch', async ({ client }) => {
@@ -35,6 +37,8 @@ test.group('Auth register', () => {
     })
     response.assertStatus(200)
     response.assertInertiaComponent('auth/register')
-    response.assertInertiaPropsContains({ errorCode: REGISTER_ERROR_CODE.PASSWORD_MISMATCH })
+    response.assertInertiaPropsContains({
+      errorCode: RegisterErrorCode.REGISTER_ERROR_CODE.PASSWORD_MISMATCH,
+    })
   })
 })

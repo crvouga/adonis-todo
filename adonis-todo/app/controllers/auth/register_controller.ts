@@ -1,4 +1,5 @@
 import User from '#models/user'
+import { RegisterErrorCode } from '#shared/auth/register_error_code'
 import { inject } from '@adonisjs/core'
 import type { HttpContext } from '@adonisjs/core/http'
 import { Logger } from '@adonisjs/core/logger'
@@ -14,7 +15,7 @@ export default class RegisterController {
 
     if (password !== passwordConfirmation) {
       return ctx.inertia.render('auth/register', {
-        errorCode: REGISTER_ERROR_CODE.PASSWORD_MISMATCH,
+        errorCode: RegisterErrorCode.REGISTER_ERROR_CODE.PASSWORD_MISMATCH,
       })
     }
 
@@ -42,30 +43,13 @@ export default class RegisterController {
 
       if (error.code === 'ER_DUP_ENTRY' || error.message.includes('UNIQUE constraint failed')) {
         return ctx.inertia.render('auth/register', {
-          errorCode: REGISTER_ERROR_CODE.EMAIL_TAKEN,
+          errorCode: RegisterErrorCode.REGISTER_ERROR_CODE.EMAIL_TAKEN,
         })
       }
 
       return ctx.inertia.render('auth/register', {
-        errorCode: REGISTER_ERROR_CODE.UNKNOWN,
+        errorCode: RegisterErrorCode.REGISTER_ERROR_CODE.UNKNOWN,
       })
     }
-  }
-}
-
-export const REGISTER_ERROR_CODE = {
-  EMAIL_TAKEN: 'EMAIL_TAKEN',
-  PASSWORD_MISMATCH: 'PASSWORD_MISMATCH',
-  UNKNOWN: 'UNKNOWN',
-}
-
-export function toRegisterErrorMessage(code: keyof typeof REGISTER_ERROR_CODE): string {
-  switch (code) {
-    case 'EMAIL_TAKEN':
-      return 'An account with this email already exists. Please use a different email or try logging in.'
-    case 'PASSWORD_MISMATCH':
-      return 'Passwords do not match. Please make sure both passwords are identical.'
-    case 'UNKNOWN':
-      return 'Sorry, we encountered an error while creating your account. Please try again later or contact support if the problem persists.'
   }
 }

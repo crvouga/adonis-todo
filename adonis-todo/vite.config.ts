@@ -20,4 +20,14 @@ export default defineConfig({
       '~/': `${getDirname(import.meta.url)}/inertia/`,
     },
   },
+
+  build: {
+    target: 'esnext',
+  },
+
+  optimizeDeps: {
+    esbuildOptions: {
+      target: 'esnext',
+    },
+  },
 })

@@ -29,7 +29,7 @@ export const plugins: Config['plugins'] = [
     baseURL: `http://${env.get('HOST')}:${env.get('PORT')}`,
   }),
   browserClient({
-    runInSuites: ['browser'],
+    // runInSuites: ['browser'],
   }),
   expect(),
   pluginAdonisJS(app),
