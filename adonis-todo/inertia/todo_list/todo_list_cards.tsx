@@ -1,6 +1,3 @@
-
-
-
 import { mapOk, unwrapOr } from '#shared/result/result'
 import { TodoListDTO } from '#shared/todo_list/todo_list_dto'
 import { useQuery } from '@tanstack/react-query'
