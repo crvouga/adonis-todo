@@ -1,10 +1,7 @@
-import { fromUnknownError, Ok, type Result } from '#shared/result/result'
-import { UserDTO } from '#shared/user/user'
+import { IAuthApi } from './interface'
+import { fromUnknownError, Ok } from '#shared/result/result'
+import { UserDTO } from '#shared/user/user_dto'
 import vine from '@vinejs/vine'
-
-export type IAuthApi = {
-  getCurrentUser: () => Promise<Result<UserDTO, string>>
-}
 
 export const AuthApi = (): IAuthApi => {
   return {

@@ -65,4 +65,15 @@ test.group('Home home', () => {
     await page.waitForURL('/login')
     await page.assertPath('/login')
   })
+
+  test('renders todo lists associated with logged in user', async ({ visit, browserContext }) => {
+    const user = await User.create({
+      email: `test-${Date.now()}@example.com`,
+      password: 'password123',
+      createdAt: DateTime.now(),
+    })
+    await browserContext.loginAs(user)
+    const page = await visit('/home')
+    await page.waitForSelector('[data-testid="todo-list-cards"]')
+  })
 })

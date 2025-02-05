@@ -29,7 +29,7 @@ export const isOk = <T, E>(result: Result<T, E>): result is Ok<T> => result.t ==
 
 export const isErr = <T, E>(result: Result<T, E>): result is Err<E> => result.t === 'err'
 
-export const map = <T, E, R>(result: Result<T, E>, mapper: (value: T) => R): Result<R, E> => {
+export const mapOk = <T, E, R>(result: Result<T, E>, mapper: (value: T) => R): Result<R, E> => {
   if (isOk(result)) {
     return Ok(mapper(result.value))
   }

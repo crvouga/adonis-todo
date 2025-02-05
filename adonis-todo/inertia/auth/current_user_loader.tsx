@@ -1,15 +1,15 @@
 import { isLoading, Loading, RemoteResult, unwrapOr } from '#shared/result/result'
-import { UserDTO } from '#shared/user/user'
+import { UserDTO } from '#shared/user/user_dto'
 import { useEffect, useState } from 'react'
-import { useAuthApi } from './use_auth_api'
+import { useAppCtx } from '~/app/app_ctx'
 
 export const useCurrentUser = () => {
-  const authApi = useAuthApi()
+  const appCtx = useAppCtx()
   const [state, setState] = useState<RemoteResult<UserDTO, string>>(Loading)
 
   const load = async () => {
     setState(Loading)
-    const result = await authApi.getCurrentUser()
+    const result = await appCtx.authApi.getCurrentUser()
     setState(result)
   }
 

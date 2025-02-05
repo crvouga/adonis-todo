@@ -1,5 +1,5 @@
 import Redirect from '~/ui/redirect'
-import { useCurrentUser } from './use_current_user'
+import { useCurrentUser } from './current_user_loader'
 
 export default function GuardLoggedIn(props: { children: React.ReactNode }) {
   const { currentUser, isLoading } = useCurrentUser()

@@ -1,13 +1,18 @@
 import { createContext, useContext } from 'react'
-import { AuthApi, IAuthApi } from '~/auth/auth_api'
+import { AuthApi } from '~/auth/auth_api/impl'
+import { IAuthApi } from '~/auth/auth_api/interface'
+import { TodoListApi } from '~/todo_list/todo_list_api/impl'
+import { ITodoListApi } from '~/todo_list/todo_list_api/interface'
 
 export type IAppCtx = {
   authApi: IAuthApi
+  todoListApi: ITodoListApi
 }
 
 export const AppCtx = (): IAppCtx => {
   return {
     authApi: AuthApi(),
+    todoListApi: TodoListApi(),
   }
 }
 

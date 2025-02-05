@@ -1,12 +1,13 @@
 /// <reference path="../../adonisrc.ts" />
 /// <reference path="../../config/inertia.ts" />
 
-import '../css/app.css'
-import { createRoot } from 'react-dom/client'
-import { createInertiaApp } from '@inertiajs/react'
 import { resolvePageComponent } from '@adonisjs/inertia/helpers'
-import { AppCtx } from './app_ctx'
-import { AppCtxProvider } from './app_ctx'
+import { createInertiaApp } from '@inertiajs/react'
+import { QueryClientProvider } from '@tanstack/react-query'
+import { createRoot } from 'react-dom/client'
+import '../css/app.css'
+import { AppCtx, AppCtxProvider } from './app_ctx'
+import { queryClient } from './query_client'
 
 const appName = import.meta.env.VITE_APP_NAME || 'AdonisJS'
 
@@ -23,9 +24,11 @@ createInertiaApp({
 
   setup({ el, App, props }) {
     createRoot(el).render(
-      <AppCtxProvider appCtx={appCtx}>
-        <App {...props} />
-      </AppCtxProvider>
+      <QueryClientProvider client={queryClient}>
+        <AppCtxProvider appCtx={appCtx}>
+          <App {...props} />
+        </AppCtxProvider>
+      </QueryClientProvider>
     )
   },
 })
