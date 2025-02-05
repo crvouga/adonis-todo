@@ -1,9 +1,8 @@
 import { mapOk, unwrapOr } from '#shared/result/result'
-import { TodoListDTO } from '#shared/todo_list/todo_list_dto'
 import { useQuery } from '@tanstack/react-query'
 import { useAppCtx } from '~/app/app_ctx'
-import { TodoListCard } from './todo_list_card'
 import { EmptyStateBlock } from '~/ui/empty_state_block'
+import { TodoListCard } from './todo_list_card'
 
 export const TodoListCardsLoader = () => {
   const { todoListApi } = useAppCtx()
@@ -22,21 +21,16 @@ export const TodoListCardsLoader = () => {
     []
   )
 
-  return <TodoListCards todoLists={items} />
-}
-
-const TodoListCards = (props: { todoLists: TodoListDTO[] }) => {
   return (
-    <div
-      data-testid="todo-list-cards"
-      className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
-    >
-      {props.todoLists.length === 0 && (
+    <div data-testid="todo-list-cards" className="w-full">
+      {items.length === 0 && (
         <EmptyStateBlock title="No todo lists found" renderIcon={() => null} />
       )}
-      {props.todoLists.map((todoList) => (
-        <TodoListCard key={todoList.id} todoList={todoList} />
-      ))}
+      <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {items.map((todoList) => (
+          <TodoListCard key={todoList.id} todoList={todoList} />
+        ))}
+      </div>
     </div>
   )
 }
