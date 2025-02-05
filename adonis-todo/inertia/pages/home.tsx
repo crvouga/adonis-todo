@@ -1,9 +1,10 @@
 import { Head, useForm } from '@inertiajs/react'
+import GuardLoggedIn from '~/auth/guard_logged_in'
 import { Button } from '~/ui/button'
 
 export default function Home() {
   return (
-    <>
+    <GuardLoggedIn>
       <Head title="Todo App" />
 
       {/* Top Navigation Bar */}
@@ -24,7 +25,7 @@ export default function Home() {
           <p>Todo App - Organize your tasks efficiently</p>
         </div>
       </footer>
-    </>
+    </GuardLoggedIn>
   )
 }
 

@@ -11,7 +11,7 @@ test.group('Auth login', () => {
 
     response.assertStatus(200)
     response.assertInertiaComponent('auth/login')
-    response.assertInertiaProps({ error: 'Invalid credentials' })
+    response.assertInertiaPropsContains({ error: 'Invalid credentials' })
   })
 
   test('should login user with valid credentials', async ({ client }) => {

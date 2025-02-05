@@ -7,10 +7,14 @@ import { Logger } from '@adonisjs/core/logger'
 import { DateTime } from 'luxon'
 
 @inject()
-export default class RegisterController {
+export default class RegisterPageController {
   constructor(protected logger: Logger) {}
 
-  async respond(ctx: HttpContext) {
+  async get(ctx: HttpContext) {
+    return renderRegisterPage(ctx, {})
+  }
+
+  async post(ctx: HttpContext) {
     const { email, password, passwordConfirmation } = ctx.request.body()
 
     if (password !== passwordConfirmation) {

@@ -3,6 +3,7 @@
         "inertiajs",
         "japa",
         "luxon",
+        "vinejs",
         "vite"
     ]
 }

@@ -11,6 +11,8 @@
     "test": "c8 node ace test",
     "test:watch": "node ace test --watch",
     "test:browser": "node ace test browser",
+    "test:browser:watch": "node ace test browser --watch",
+    "test:functional": "node ace test functional",
     "test:functional:watch": "node ace test functional --watch",
     "lint": "eslint .",
     "format": "prettier --write .",

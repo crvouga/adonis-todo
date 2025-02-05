@@ -3,7 +3,11 @@ import type { HttpContext } from '@adonisjs/core/http'
 import hash from '@adonisjs/core/services/hash'
 
 export default class LoginController {
-  async respond(ctx: HttpContext) {
+  async get(ctx: HttpContext) {
+    return ctx.inertia.render('auth/login', {})
+  }
+
+  async post(ctx: HttpContext) {
     const { email, password } = ctx.request.body()
 
     const user = await User.query()

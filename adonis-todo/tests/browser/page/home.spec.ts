@@ -8,12 +8,6 @@ test.group('Home home', () => {
     response.assertStatus(200)
   })
 
-  // test.todo('should display home page content', async ({ browser }) => {
-  //   const page = await browser.newPage()
-  //   await page.goto('/home')
-  //   await page.assertExists('main')
-  // })
-
   test('redirect to login page when not authenticated', async ({ visit }) => {
     const page = await visit('/home')
     await page.waitForURL('/login')
@@ -52,6 +46,22 @@ test.group('Home home', () => {
     await browserContext.loginAs(user)
     const page = await visit('/home')
     await page.click('button:has-text("Logout")')
+    await page.waitForURL('/login')
+    await page.assertPath('/login')
+  })
+
+  test('after logging out it prevents access to home page', async ({ visit, browserContext }) => {
+    const user = await User.create({
+      email: `test-${Date.now()}@example.com`,
+      password: 'password123',
+      createdAt: DateTime.now(),
+    })
+    await browserContext.loginAs(user)
+    const page = await visit('/home')
+    await page.click('button:has-text("Logout")')
+    await page.waitForURL('/login')
+    await page.assertPath('/login')
+    await page.goBack()
     await page.waitForURL('/login')
     await page.assertPath('/login')
   })

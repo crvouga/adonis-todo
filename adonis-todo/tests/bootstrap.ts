@@ -12,6 +12,7 @@ import env from '#start/env'
 import { shieldApiClient } from '@adonisjs/shield/plugins/api_client'
 import { sessionApiClient } from '@adonisjs/session/plugins/api_client'
 import { inertiaApiClient } from '@adonisjs/inertia/plugins/api_client'
+import { authApiClient } from '@adonisjs/auth/plugins/api_client'
 
 /**
  * This file is imported by the "bin/test.ts" entrypoint file
@@ -33,9 +34,10 @@ export const plugins: Config['plugins'] = [
   }),
   expect(),
   pluginAdonisJS(app),
+  inertiaApiClient(app),
+  authApiClient(app),
   sessionBrowserClient(app),
   authBrowserClient(app),
-  inertiaApiClient(app),
 ]
 
 /**
