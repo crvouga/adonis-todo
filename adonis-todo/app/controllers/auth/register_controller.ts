@@ -5,7 +5,6 @@ import { inject } from '@adonisjs/core'
 import type { HttpContext } from '@adonisjs/core/http'
 import { Logger } from '@adonisjs/core/logger'
 import { DateTime } from 'luxon'
-import { createHash } from 'node:crypto'
 
 @inject()
 export default class RegisterController {
@@ -21,11 +20,9 @@ export default class RegisterController {
     }
 
     try {
-      const hashedPassword = createHash('sha256').update(password).digest('hex')
-
       const user = await User.create({
         email,
-        password: hashedPassword,
+        password,
         createdAt: DateTime.now(),
       })
 
