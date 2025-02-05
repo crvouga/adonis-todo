@@ -26,15 +26,14 @@ export const TodoListCardsLoader = () => {
 }
 
 const TodoListCards = (props: { todoLists: TodoListDTO[] }) => {
-  if (props.todoLists.length === 0) {
-    return <EmptyStateBlock title="No todo lists found" renderIcon={() => null} />
-  }
-
   return (
     <div
       data-testid="todo-list-cards"
       className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
     >
+      {props.todoLists.length === 0 && (
+        <EmptyStateBlock title="No todo lists found" renderIcon={() => null} />
+      )}
       {props.todoLists.map((todoList) => (
         <TodoListCard key={todoList.id} todoList={todoList} />
       ))}
