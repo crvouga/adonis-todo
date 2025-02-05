@@ -1,10 +1,10 @@
+import { RegisterErrorCode } from '#shared/auth/register_error_code'
+import type { RegisterPageProps } from '#shared/auth/register_page_props'
 import { Head, useForm } from '@inertiajs/react'
 import { Alert } from '~/ui/alert'
 import { Button } from '~/ui/button'
-import { TextField } from '~/ui/text_field'
-import { RegisterErrorCode } from '#shared/auth/register_error_code'
-import type { RegisterPageProps } from '#shared/auth/register_page_props'
 import { Card } from '~/ui/card'
+import { TextField } from '~/ui/text_field'
 
 export default function Register(props: RegisterPageProps) {
   const { data, setData, post, processing } = useForm({
@@ -13,12 +13,11 @@ export default function Register(props: RegisterPageProps) {
     passwordConfirmation: '',
   })
 
-  const errorMessage = props.errorCode ? RegisterErrorCode.toMessage(props.errorCode) : null
-
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    post('/register')
+  const updateField = (field: keyof typeof data, value: string) => {
+    setData(field, value)
   }
+
+  const errorMessage = props.errorCode ? RegisterErrorCode.toMessage(props.errorCode) : null
 
   return (
     <>
@@ -29,13 +28,19 @@ export default function Register(props: RegisterPageProps) {
           title="Register"
           body={
             <>
-              <form className="space-y-4" onSubmit={onSubmit}>
+              <form
+                className="space-y-4"
+                onSubmit={(e) => {
+                  e.preventDefault()
+                  post('/register')
+                }}
+              >
                 <TextField
                   label="Email"
                   type="email"
                   placeholder="your@email.com"
                   value={data.email}
-                  onChange={(value) => setData('email', value)}
+                  onChange={(value) => updateField('email', value)}
                 />
 
                 <TextField
@@ -43,7 +48,7 @@ export default function Register(props: RegisterPageProps) {
                   type="password"
                   placeholder="••••••••"
                   value={data.password}
-                  onChange={(value) => setData('password', value)}
+                  onChange={(value) => updateField('password', value)}
                 />
 
                 <TextField
@@ -52,7 +57,7 @@ export default function Register(props: RegisterPageProps) {
                   name="passwordConfirmation"
                   placeholder="••••••••"
                   value={data.passwordConfirmation}
-                  onChange={(value) => setData('passwordConfirmation', value)}
+                  onChange={(value) => updateField('passwordConfirmation', value)}
                 />
 
                 {errorMessage && <Alert variant="error" message={errorMessage} />}
