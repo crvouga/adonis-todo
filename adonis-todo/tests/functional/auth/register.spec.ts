@@ -2,6 +2,7 @@ import { test } from '@japa/runner'
 import User from '#models/user'
 import { DateTime } from 'luxon'
 import { RegisterErrorCode } from '#shared/auth/register_error_code'
+import hash from '@adonisjs/core/services/hash'
 
 test.group('Auth register', () => {
   test('should render register page', async ({ client }) => {
@@ -40,5 +41,27 @@ test.group('Auth register', () => {
     response.assertInertiaPropsContains({
       errorCode: RegisterErrorCode.REGISTER_ERROR_CODE.PASSWORD_MISMATCH,
     })
+  })
+
+  test('should hash password when creating new user', async ({ client, assert }) => {
+    const email = `test-${Date.now()}@example.com`
+    const password = 'password123'
+
+    const response = await client.post('/register').withCsrfToken().withInertia().form({
+      email,
+      password,
+      passwordConfirmation: password,
+    })
+
+    response.assertStatus(200)
+    response.assertRedirectsTo('/home')
+
+    const user = await User.findBy('email', email)
+    const isPasswordHashed = await hash.verify(user!.password, password)
+
+    // Password should be hashed and verifiable
+    assert.isTrue(isPasswordHashed)
+    // Raw password should not be stored
+    assert.notEqual(user!.password, password)
   })
 })
