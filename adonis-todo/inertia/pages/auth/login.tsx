@@ -1,8 +1,9 @@
 import { Head, useForm } from '@inertiajs/react'
+import MustBeLoggedOut from '~/auth/must_be_logged_out'
 import { Alert } from '~/ui/alert'
 import { Button } from '~/ui/button'
-import { TextField } from '~/ui/text_field'
 import { Card } from '~/ui/card'
+import { TextField } from '~/ui/text_field'
 
 export default function Login(props: { error?: string | null }) {
   const { data, setData, post, processing } = useForm({
@@ -16,7 +17,7 @@ export default function Login(props: { error?: string | null }) {
   }
 
   return (
-    <>
+    <MustBeLoggedOut>
       <Head title="Login" />
 
       <div className="min-h-screen flex items-center justify-center bg-sand-2">
@@ -60,6 +61,6 @@ export default function Login(props: { error?: string | null }) {
           }
         />
       </div>
-    </>
+    </MustBeLoggedOut>
   )
 }

@@ -1,11 +1,11 @@
 import { Head, useForm } from '@inertiajs/react'
-import GuardLoggedIn from '~/auth/guard_logged_in'
+import MustBeLoggedIn from '~/auth/must_be_logged_in'
 import { TodoListCardsLoader } from '~/todo_list/todo_list_cards'
 import { Button } from '~/ui/button'
 
 export default function Home() {
   return (
-    <GuardLoggedIn>
+    <MustBeLoggedIn>
       <Head title="Todo App" />
 
       {/* Top Navigation Bar */}
@@ -22,13 +22,7 @@ export default function Home() {
       <main className="container mx-auto p-4">
         <TodoListCardsLoader />
       </main>
-
-      <footer className="footer footer-center p-4 bg-base-300 text-base-content mt-8">
-        <div>
-          <p>Todo App - Organize your tasks efficiently</p>
-        </div>
-      </footer>
-    </GuardLoggedIn>
+    </MustBeLoggedIn>
   )
 }
 

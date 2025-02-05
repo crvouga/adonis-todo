@@ -1,15 +1,15 @@
 import Redirect from '~/ui/redirect'
 import { useCurrentUser } from './current_user_loader'
 
-export default function GuardLoggedIn(props: { children: React.ReactNode }) {
+export default function MustBeLoggedIn(props: { children: React.ReactNode }) {
   const { currentUser, isLoading } = useCurrentUser()
-
-  if (currentUser) {
-    return props.children
-  }
 
   if (isLoading) {
     return <div>Loading...</div>
+  }
+
+  if (currentUser) {
+    return props.children
   }
 
   return <Redirect href="/login" />

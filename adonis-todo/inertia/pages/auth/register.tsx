@@ -1,6 +1,7 @@
 import { RegisterErrorCode } from '#shared/auth/register_error_code'
 import type { RegisterPageProps } from '#shared/auth/register_page_props'
 import { Head, useForm } from '@inertiajs/react'
+import MustBeLoggedOut from '~/auth/must_be_logged_out'
 import { Alert } from '~/ui/alert'
 import { Button } from '~/ui/button'
 import { Card } from '~/ui/card'
@@ -20,7 +21,7 @@ export default function Register(props: RegisterPageProps) {
   const errorMessage = props.errorCode ? RegisterErrorCode.toMessage(props.errorCode) : null
 
   return (
-    <>
+    <MustBeLoggedOut>
       <Head title="Register" />
 
       <div className="min-h-screen flex items-center justify-center bg-sand-2">
@@ -79,6 +80,6 @@ export default function Register(props: RegisterPageProps) {
           }
         />
       </div>
-    </>
+    </MustBeLoggedOut>
   )
 }
