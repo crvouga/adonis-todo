@@ -8,6 +8,10 @@ import { expect } from '@japa/expect'
 import { pluginAdonisJS } from '@japa/plugin-adonisjs'
 import { authBrowserClient } from '@adonisjs/auth/plugins/browser_client'
 import type { Config } from '@japa/runner/types'
+import env from '#start/env'
+import { shieldApiClient } from '@adonisjs/shield/plugins/api_client'
+import { sessionApiClient } from '@adonisjs/session/plugins/api_client'
+import { inertiaApiClient } from '@adonisjs/inertia/plugins/api_client'
 
 /**
  * This file is imported by the "bin/test.ts" entrypoint file
@@ -19,7 +23,11 @@ import type { Config } from '@japa/runner/types'
  */
 export const plugins: Config['plugins'] = [
   assert(),
-  apiClient(),
+  sessionApiClient(app),
+  shieldApiClient(),
+  apiClient({
+    baseURL: `http://${env.get('HOST')}:${env.get('PORT')}`,
+  }),
   browserClient({
     runInSuites: ['browser'],
   }),
@@ -27,6 +35,7 @@ export const plugins: Config['plugins'] = [
   pluginAdonisJS(app),
   sessionBrowserClient(app),
   authBrowserClient(app),
+  inertiaApiClient(app),
 ]
 
 /**
