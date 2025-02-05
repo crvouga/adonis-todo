@@ -2,13 +2,16 @@ import { Head, useForm } from '@inertiajs/react'
 import { Alert } from '~/ui/alert'
 import { Button } from '~/ui/button'
 import { TextField } from '~/ui/text_field'
+import { REGISTER_ERROR_CODE, toRegisterErrorMessage } from '#controllers/auth/register_controller'
 
-export default function Register(props: { error?: string | null }) {
+export default function Register(props: { errorColor?: keyof typeof REGISTER_ERROR_CODE | null }) {
   const { data, setData, post, processing } = useForm({
     email: '',
     password: '',
     passwordConfirmation: '',
   })
+
+  const errorMessage = props.errorColor ? toRegisterErrorMessage(props.errorColor) : null
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -50,7 +53,7 @@ export default function Register(props: { error?: string | null }) {
                 onChange={(value) => setData('passwordConfirmation', value)}
               />
 
-              {props.error && <Alert variant="error" message={props.error} />}
+              {errorMessage && <Alert variant="error" message={errorMessage} />}
 
               <div className="flex justify-end w-full pt-6">
                 <Button type="submit" disabled={processing}>

@@ -5,12 +5,6 @@ import { Logger } from '@adonisjs/core/logger'
 import { DateTime } from 'luxon'
 import { createHash } from 'node:crypto'
 
-export const REGISTER_ERROR_CODE = {
-  EMAIL_TAKEN: 'EMAIL_TAKEN',
-  PASSWORD_MISMATCH: 'PASSWORD_MISMATCH',
-  UNKNOWN: 'UNKNOWN',
-}
-
 @inject()
 export default class RegisterController {
   constructor(protected logger: Logger) {}
@@ -21,30 +15,24 @@ export default class RegisterController {
     if (password !== passwordConfirmation) {
       return ctx.inertia.render('auth/register', {
         errorCode: REGISTER_ERROR_CODE.PASSWORD_MISMATCH,
-        error: 'Passwords do not match. Please make sure both passwords are identical.',
       })
     }
 
     try {
-      // Hash password
       const hashedPassword = createHash('sha256').update(password).digest('hex')
 
-      // Create user
       const user = await User.create({
         email,
         password: hashedPassword,
         createdAt: DateTime.now(),
       })
 
-      // Login the user
       await ctx.auth.use('web').login(user)
 
-      // Redirect to home
       return ctx.response.redirect('/home')
     } catch (error) {
-      // Log the full error for debugging
       const errorDetails = JSON.stringify(error, Object.getOwnPropertyNames(error))
-      console.error('Registration error:', {
+      this.logger.error('Registration error:', {
         error: error.toString(),
         message: error.message,
         code: error.code,
@@ -52,20 +40,32 @@ export default class RegisterController {
         details: errorDetails,
       })
 
-      // Check if error is due to duplicate email
       if (error.code === 'ER_DUP_ENTRY' || error.message.includes('UNIQUE constraint failed')) {
         return ctx.inertia.render('auth/register', {
           errorCode: REGISTER_ERROR_CODE.EMAIL_TAKEN,
-          error:
-            'An account with this email already exists. Please use a different email or try logging in.',
         })
       }
 
       return ctx.inertia.render('auth/register', {
         errorCode: REGISTER_ERROR_CODE.UNKNOWN,
-        error:
-          'Sorry, we encountered an error while creating your account. Please try again later or contact support if the problem persists.',
       })
     }
+  }
+}
+
+export const REGISTER_ERROR_CODE = {
+  EMAIL_TAKEN: 'EMAIL_TAKEN',
+  PASSWORD_MISMATCH: 'PASSWORD_MISMATCH',
+  UNKNOWN: 'UNKNOWN',
+}
+
+export function toRegisterErrorMessage(code: keyof typeof REGISTER_ERROR_CODE): string {
+  switch (code) {
+    case 'EMAIL_TAKEN':
+      return 'An account with this email already exists. Please use a different email or try logging in.'
+    case 'PASSWORD_MISMATCH':
+      return 'Passwords do not match. Please make sure both passwords are identical.'
+    case 'UNKNOWN':
+      return 'Sorry, we encountered an error while creating your account. Please try again later or contact support if the problem persists.'
   }
 }
