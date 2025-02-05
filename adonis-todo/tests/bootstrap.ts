@@ -13,6 +13,7 @@ import { browserClient } from '@japa/browser-client'
 import { expect } from '@japa/expect'
 import { pluginAdonisJS } from '@japa/plugin-adonisjs'
 import type { Config } from '@japa/runner/types'
+import { openapi } from '@japa/openapi-assertions'
 
 /**
  * This file is imported by the "bin/test.ts" entrypoint file
@@ -23,6 +24,14 @@ import type { Config } from '@japa/runner/types'
  * Learn more - https://japa.dev/docs/runner-config#plugins-optional
  */
 export const plugins: Config['plugins'] = [
+  assert({
+    openApi: {
+      schemas: [app.makePath('resources/open_api_schema.yaml')],
+    },
+  }),
+  openapi({
+    schemas: [app.makePath('resources/open_api_schema.yaml')],
+  }),
   sessionApiClient(app),
   shieldApiClient(),
   apiClient({
@@ -37,11 +46,6 @@ export const plugins: Config['plugins'] = [
   authApiClient(app),
   sessionBrowserClient(app),
   authBrowserClient(app),
-  assert({
-    openApi: {
-      schemas: [app.makePath('resources/open_api_schema.yaml')],
-    },
-  }),
 ]
 
 /**

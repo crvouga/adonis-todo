@@ -17,8 +17,8 @@ export default class TodoListListsController {
 
     const todoLists = await TodoList.query().paginate(input.page, input.perPage)
 
-    const paginatedTodoLists: Paginated<TodoListDTO> = {
-      items: todoLists.map(
+    const items: TodoListDTO[] = Array.from(
+      todoLists.map(
         (list): TodoListDTO => ({
           id: list.id,
           title: list.title,
@@ -26,7 +26,11 @@ export default class TodoListListsController {
           createdAt: DateTime.fromJSDate(list.createdAt.toJSDate()).toISO(),
           updatedAt: list.updatedAt ? DateTime.fromJSDate(list.updatedAt.toJSDate()).toISO() : null,
         })
-      ),
+      )
+    )
+
+    const paginatedTodoLists: Paginated<TodoListDTO> = {
+      items,
       total: todoLists.total,
       page: todoLists.currentPage,
       perPage: todoLists.perPage,

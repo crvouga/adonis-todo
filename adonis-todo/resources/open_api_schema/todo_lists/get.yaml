@@ -1,0 +1,54 @@
+summary: Get paginated todo lists
+parameters:
+  - in: query
+    name: page
+    required: true
+    schema:
+      type: integer
+    description: Page number
+  - in: query
+    name: perPage
+    required: true
+    schema:
+      type: integer
+    description: Number of items per page
+responses:
+  '200':
+    description: Successful response
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            items:
+              type: array
+              items:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  title:
+                    type: string
+                  ownerUserId:
+                    type: integer
+                  createdAt:
+                    type: string
+                    format: date-time
+                  updatedAt:
+                    type: string
+                    format: date-time
+                    nullable: true
+            total:
+              type: integer
+            page:
+              type: integer
+            perPage:
+              type: integer
+            lastPage:
+              type: integer
+          required:
+            - items
+            - total
+            - page
+            - perPage
+            - lastPage

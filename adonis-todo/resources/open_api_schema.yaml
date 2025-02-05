@@ -1,0 +1,10 @@
+openapi: 3.0.0
+info:
+  title: Todo List API
+  version: '1.0'
+  description: API for managing todo lists
+
+paths:
+  /api/todo-lists:
+    get:
+      $ref: './open_api_schema/todo_lists/get.yaml'
