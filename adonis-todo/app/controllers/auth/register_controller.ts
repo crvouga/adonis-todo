@@ -5,6 +5,12 @@ import { Logger } from '@adonisjs/core/logger'
 import { DateTime } from 'luxon'
 import { createHash } from 'node:crypto'
 
+export const REGISTER_ERROR_CODE = {
+  EMAIL_TAKEN: 'EMAIL_TAKEN',
+  PASSWORD_MISMATCH: 'PASSWORD_MISMATCH',
+  UNKNOWN: 'UNKNOWN',
+}
+
 @inject()
 export default class RegisterController {
   constructor(protected logger: Logger) {}
@@ -14,6 +20,7 @@ export default class RegisterController {
 
     if (password !== passwordConfirmation) {
       return ctx.inertia.render('auth/register', {
+        errorCode: REGISTER_ERROR_CODE.PASSWORD_MISMATCH,
         error: 'Passwords do not match. Please make sure both passwords are identical.',
       })
     }
@@ -48,12 +55,14 @@ export default class RegisterController {
       // Check if error is due to duplicate email
       if (error.code === 'ER_DUP_ENTRY' || error.message.includes('UNIQUE constraint failed')) {
         return ctx.inertia.render('auth/register', {
+          errorCode: REGISTER_ERROR_CODE.EMAIL_TAKEN,
           error:
             'An account with this email already exists. Please use a different email or try logging in.',
         })
       }
 
       return ctx.inertia.render('auth/register', {
+        errorCode: REGISTER_ERROR_CODE.UNKNOWN,
         error:
           'Sorry, we encountered an error while creating your account. Please try again later or contact support if the problem persists.',
       })
