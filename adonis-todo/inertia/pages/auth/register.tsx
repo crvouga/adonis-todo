@@ -3,15 +3,16 @@ import { Alert } from '~/ui/alert'
 import { Button } from '~/ui/button'
 import { TextField } from '~/ui/text_field'
 import { RegisterErrorCode } from '#shared/auth/register_error_code'
+import type { RegisterPageProps } from '#shared/auth/register_page_props'
 
-export default function Register(props: { errorColor?: RegisterErrorCode | null }) {
+export default function Register(props: RegisterPageProps) {
   const { data, setData, post, processing } = useForm({
     email: '',
     password: '',
     passwordConfirmation: '',
   })
 
-  const errorMessage = props.errorColor ? RegisterErrorCode.toMessage(props.errorColor) : null
+  const errorMessage = props.errorCode ? RegisterErrorCode.toMessage(props.errorCode) : null
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()

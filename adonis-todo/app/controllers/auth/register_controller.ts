@@ -1,5 +1,6 @@
 import User from '#models/user'
 import { RegisterErrorCode } from '#shared/auth/register_error_code'
+import { RegisterPageProps } from '#shared/auth/register_page_props'
 import { inject } from '@adonisjs/core'
 import type { HttpContext } from '@adonisjs/core/http'
 import { Logger } from '@adonisjs/core/logger'
@@ -14,7 +15,7 @@ export default class RegisterController {
     const { email, password, passwordConfirmation } = ctx.request.body()
 
     if (password !== passwordConfirmation) {
-      return ctx.inertia.render('auth/register', {
+      return renderRegisterPage(ctx, {
         errorCode: RegisterErrorCode.REGISTER_ERROR_CODE.PASSWORD_MISMATCH,
       })
     }
@@ -42,14 +43,18 @@ export default class RegisterController {
       })
 
       if (error.code === 'ER_DUP_ENTRY' || error.message.includes('UNIQUE constraint failed')) {
-        return ctx.inertia.render('auth/register', {
+        return renderRegisterPage(ctx, {
           errorCode: RegisterErrorCode.REGISTER_ERROR_CODE.EMAIL_TAKEN,
         })
       }
 
-      return ctx.inertia.render('auth/register', {
+      return renderRegisterPage(ctx, {
         errorCode: RegisterErrorCode.REGISTER_ERROR_CODE.UNKNOWN,
       })
     }
   }
+}
+
+function renderRegisterPage(ctx: HttpContext, props: RegisterPageProps) {
+  return ctx.inertia.render('auth/register', props)
 }
