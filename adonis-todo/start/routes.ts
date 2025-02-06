@@ -15,7 +15,7 @@ const LoginPageController = () => import('#controllers/auth/login_page_controlle
 const HomePageController = () => import('#controllers/home/home_page_controller')
 const TodoListCreatePageController = () => import('#controllers/todo_list/create_page_controller')
 const TodoListController = () => import('#controllers/todo_list/todo_list_controller')
-const SwaggerController = () => import('#controllers/swagger_controller')
+const SwaggerController = () => import('#controllers/swagger/swagger_controller')
 
 router.get('/', [HomePageController, 'get'])
 router.get('/home', [HomePageController, 'get']) // Auth middleware should be in controller
