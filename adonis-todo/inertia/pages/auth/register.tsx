@@ -1,6 +1,6 @@
 import { RegisterErrorCode } from '#shared/auth/register_error_code'
 import type { RegisterPageProps } from '#shared/auth/register_page_props'
-import { Head, useForm } from '@inertiajs/react'
+import { Head, useForm, Link } from '@inertiajs/react'
 import MustBeLoggedOut from '~/auth/must_be_logged_out'
 import { Alert } from '~/ui/alert'
 import { Button } from '~/ui/button'
@@ -72,9 +72,9 @@ export default function Register(props: RegisterPageProps) {
 
               <div className="text-center mt-4">
                 <span className="text-base-content/70">Already have an account? </span>
-                <a href="/login" className="link link-primary">
+                <Link href="/login" className="link link-primary">
                   Login
-                </a>
+                </Link>
               </div>
             </>
           }

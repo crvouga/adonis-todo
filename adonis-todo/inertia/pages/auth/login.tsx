@@ -1,4 +1,4 @@
-import { Head, useForm } from '@inertiajs/react'
+import { Head, useForm, Link } from '@inertiajs/react'
 import MustBeLoggedOut from '~/auth/must_be_logged_out'
 import { Alert } from '~/ui/alert'
 import { Button } from '~/ui/button'
@@ -53,9 +53,9 @@ export default function Login(props: { error?: string | null }) {
 
               <div className="text-center mt-4">
                 <span className="text-base-content/70">Don't have an account? </span>
-                <a href="/register" className="link link-primary">
+                <Link href="/register" className="link link-primary">
                   Register
-                </a>
+                </Link>
               </div>
             </>
           }

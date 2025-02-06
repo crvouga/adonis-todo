@@ -1,4 +1,5 @@
 import { ReactNode } from 'react'
+import { Link } from '@inertiajs/react'
 
 export interface DropdownMenuProps {
   trigger: ReactNode
@@ -29,7 +30,7 @@ export default function DropdownMenu({
         {items.map((item, index) => (
           <li key={index}>
             {item.href ? (
-              <a href={item.href}>{item.label}</a>
+              <Link href={item.href}>{item.label}</Link>
             ) : (
               <button onClick={item.onClick}>{item.label}</button>
             )}
