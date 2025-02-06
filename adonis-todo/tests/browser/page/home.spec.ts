@@ -76,4 +76,20 @@ test.group('Home home', () => {
     const page = await visit('/home')
     await page.waitForSelector('[data-testid="todo-list-cards"]')
   })
+
+  test('clicking create todo list button opens create form page', async ({
+    visit,
+    browserContext,
+  }) => {
+    const user = await User.create({
+      email: `test-${Date.now()}@example.com`,
+      password: 'password123',
+      createdAt: DateTime.now(),
+    })
+    await browserContext.loginAs(user)
+    const page = await visit('/home')
+    await page.click('[data-testid="create-todo-list-button"]')
+    await page.waitForURL('/todo-lists/create')
+    await page.assertPath('/todo-lists/create')
+  })
 })

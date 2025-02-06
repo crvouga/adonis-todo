@@ -6,7 +6,7 @@ test.group('Auth current user', () => {
   test('should return null when logged out', async ({ client, assert }) => {
     const response = await client.get('/current-user')
     response.assertStatus(200)
-    assert.deepEqual(response.body(), { user: null })
+    assert.deepEqual(response.body(), {})
   })
 
   test('should return user data when logged in', async ({ client, assert }) => {

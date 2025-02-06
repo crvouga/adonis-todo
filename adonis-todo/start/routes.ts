@@ -20,23 +20,25 @@ const SwaggerController = () => import('#controllers/swagger/swagger_controller'
 
 router
   .group(() => {
+    router.get('/login', [LoginPageController, 'get'])
+    router.post('/login', [LoginPageController, 'post'])
+
+    router.get('/register', [RegisterPageController, 'get'])
+    router.post('/register', [RegisterPageController, 'post'])
+  })
+  .use(middleware.guest())
+
+router
+  .group(() => {
     router.get('/', [HomePageController, 'get'])
     router.get('/home', [HomePageController, 'get'])
+    router.get('/current-user', [CurrentUserController, 'respond'])
+    router.post('/logout', [LogoutController, 'respond'])
+    router.get('/todo-lists/create', [TodoListCreatePageController, 'get'])
+    router.post('/todo-lists/create', [TodoListCreatePageController, 'post'])
+    router.get('/api/todo-lists', [TodoListController, 'get'])
   })
   .use(middleware.auth())
-
-router.get('/login', [LoginPageController, 'get'])
-router.post('/login', [LoginPageController, 'post'])
-
-router.get('/register', [RegisterPageController, 'get'])
-router.post('/register', [RegisterPageController, 'post'])
-
-router.get('/current-user', [CurrentUserController, 'respond'])
-router.post('/logout', [LogoutController, 'respond'])
-
-router.get('/todo-lists/create', [TodoListCreatePageController, 'get'])
-router.post('/todo-lists/create', [TodoListCreatePageController, 'post'])
-router.get('/api/todo-lists', [TodoListController, 'get'])
 
 router.get('/swagger', [SwaggerController, 'getSwaggerUi'])
 router.get('/swagger/*', [SwaggerController, 'getSwaggerFile'])

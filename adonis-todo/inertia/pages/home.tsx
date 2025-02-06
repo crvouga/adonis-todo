@@ -15,14 +15,21 @@ export default function Home() {
           </Link>
         </div>
         <div className="flex-none gap-2">
-          <Link href="/todo-lists/create" className="btn btn-primary">
-            Create Todo List
-          </Link>
           <LogoutButton />
         </div>
       </div>
 
       <main className="container mx-auto p-4">
+        <div className="flex justify-between items-center mb-4">
+          <h1 className="text-2xl font-bold">Lists</h1>
+          <Link
+            href="/todo-lists/create"
+            className="btn btn-primary"
+            data-testid="create-todo-list-button"
+          >
+            Create New List
+          </Link>
+        </div>
         <TodoListCardsLoader />
       </main>
     </MustBeLoggedIn>
