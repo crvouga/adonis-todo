@@ -21,6 +21,7 @@ export default function TodoListCreatePage() {
           body={
             <form
               className="space-y-4"
+              data-testid="todo-list-create-form"
               onSubmit={(e) => {
                 e.preventDefault()
                 post('/todo-lists/create')

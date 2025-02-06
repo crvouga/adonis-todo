@@ -11,7 +11,7 @@ test.group('Todo List Create', () => {
     })
     await browserContext.loginAs(user)
     const page = await visit('/todo-lists/create')
-    await page.assertExists('form')
+    await page.assertExists('form[data-testid="todo-list-create-form"]')
     await page.assertExists('input[type="text"]')
     await page.assertExists('button[type="submit"]')
   })
@@ -25,8 +25,9 @@ test.group('Todo List Create', () => {
     await browserContext.loginAs(user)
 
     const page = await visit('/todo-lists/create')
-    await page.locator('input[type="text"]').fill('My Todo List')
-    await page.locator('button[type="submit"]').click()
+    const form = page.locator('form[data-testid="todo-list-create-form"]')
+    await form.locator('input[type="text"]').fill('My Todo List')
+    await form.locator('button[type="submit"]').click()
 
     await page.waitForURL(/\/todo-lists\/\d+/)
     await page.assertTextContains('body', 'My Todo List')
