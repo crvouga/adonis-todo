@@ -1,8 +1,8 @@
-import { Head, useForm } from '@inertiajs/react'
+import { useForm } from '@inertiajs/react'
+import { Button } from '~/ui/button'
 import { Card } from '~/ui/card'
 import { TextField } from '~/ui/text_field'
-import { Button } from '~/ui/button'
-import MustBeLoggedIn from '~/auth/must_be_logged_in'
+import PageLayout from '~/page/layout'
 
 export default function TodoListCreatePage() {
   const { data, setData, post, processing } = useForm({
@@ -14,10 +14,8 @@ export default function TodoListCreatePage() {
   }
 
   return (
-    <MustBeLoggedIn>
-      <Head title="Create Todo List" />
-
-      <div className="min-h-screen flex items-center justify-center bg-sand-2">
+    <PageLayout title="Create Todo List">
+      <div className="flex justify-center items-center w-full h-full">
         <Card
           title="Create New Todo List"
           body={
@@ -45,6 +43,6 @@ export default function TodoListCreatePage() {
           }
         />
       </div>
-    </MustBeLoggedIn>
+    </PageLayout>
   )
 }
