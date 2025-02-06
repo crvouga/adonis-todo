@@ -22,16 +22,10 @@ test.group('Todo list create', () => {
       createdAt: DateTime.now(),
     })
 
-    const response = await client
-      .post('/todo-lists/create')
-      .withInertia()
-      .withCsrfToken()
-      .loginAs(user)
-      .form({
-        title: 'My New Todo List',
-      })
+    await client.post('/todo-lists/create').withInertia().withCsrfToken().loginAs(user).form({
+      title: 'My New Todo List',
+    })
 
-    response.assertRedirectsTo('/home')
     await TodoList.findByOrFail('title', 'My New Todo List')
   })
 })

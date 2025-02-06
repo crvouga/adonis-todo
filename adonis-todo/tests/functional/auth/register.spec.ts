@@ -57,7 +57,10 @@ test.group('Auth register', () => {
     response.assertRedirectsTo('/home')
 
     const user = await User.findBy('email', email)
-    const isPasswordHashed = await hash.verify(user!.password, password)
+    if (!user) {
+      throw new Error('User not found')
+    }
+    const isPasswordHashed = await hash.verify(user.password, password)
 
     // Password should be hashed and verifiable
     assert.isTrue(isPasswordHashed)

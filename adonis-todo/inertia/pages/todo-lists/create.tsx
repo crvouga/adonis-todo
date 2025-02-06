@@ -2,6 +2,7 @@ import { Head, useForm } from '@inertiajs/react'
 import { Card } from '~/ui/card'
 import { TextField } from '~/ui/text_field'
 import { Button } from '~/ui/button'
+import MustBeLoggedIn from '~/auth/must_be_logged_in'
 
 export default function TodoListCreatePage() {
   const { data, setData, post, processing } = useForm({
@@ -13,7 +14,7 @@ export default function TodoListCreatePage() {
   }
 
   return (
-    <>
+    <MustBeLoggedIn>
       <Head title="Create Todo List" />
 
       <div className="min-h-screen flex items-center justify-center bg-sand-2">
@@ -37,13 +38,13 @@ export default function TodoListCreatePage() {
 
               <div className="flex justify-end w-full pt-6">
                 <Button type="submit" disabled={processing}>
-                  {processing ? 'Creating...' : 'Create Todo List'}
+                  Create Todo List
                 </Button>
               </div>
             </form>
           }
         />
       </div>
-    </>
+    </MustBeLoggedIn>
   )
 }

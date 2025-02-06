@@ -43,6 +43,6 @@ export default class TodoListCreatePageController {
       userId: created.ownerUserId,
     })
 
-    return response.status(302).redirect('/home')
+    return response.status(302).redirect(`/todo-lists/${created.id}`)
   }
 }

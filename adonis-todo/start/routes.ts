@@ -15,7 +15,8 @@ const RegisterPageController = () => import('#controllers/auth/register_page_con
 const LoginPageController = () => import('#controllers/auth/login_page_controller')
 const HomePageController = () => import('#controllers/home/home_page_controller')
 const TodoListCreatePageController = () => import('#controllers/todo_list/create_page_controller')
-const TodoListController = () => import('#controllers/todo_list/todo_list_controller')
+const TodoListController = () => import('#controllers/todo_list/api_controller')
+const TodoListPageController = () => import('#controllers/todo_list/page_controller')
 const SwaggerController = () => import('#controllers/swagger/swagger_controller')
 
 router
@@ -36,6 +37,7 @@ router
     router.post('/logout', [LogoutController, 'respond'])
     router.get('/todo-lists/create', [TodoListCreatePageController, 'get'])
     router.post('/todo-lists/create', [TodoListCreatePageController, 'post'])
+    router.get('/todo-lists/:id', [TodoListPageController, 'get'])
     router.get('/api/todo-lists', [TodoListController, 'get'])
   })
   .use(middleware.auth())

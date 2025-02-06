@@ -22,7 +22,6 @@ test.group('Home home', () => {
     })
     await browserContext.loginAs(user)
     const page = await visit('/home')
-    await page.waitForURL('/home')
     await page.assertPath('/home')
   })
 
