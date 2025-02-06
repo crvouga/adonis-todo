@@ -1,5 +1,5 @@
-/// <reference path="../../adonisrc.ts" />
-/// <reference path="../../config/inertia.ts" />
+/// <reference path="../../../adonisrc.ts" />
+/// <reference path="../../../config/inertia.ts" />
 
 import { resolvePageComponent } from '@adonisjs/inertia/helpers'
 import { createInertiaApp } from '@inertiajs/react'
