@@ -15,6 +15,7 @@ const LoginPageController = () => import('#controllers/auth/login_page_controlle
 const HomePageController = () => import('#controllers/home/home_page_controller')
 const TodoListCreatePageController = () => import('#controllers/todo_list/create_page_controller')
 const TodoListController = () => import('#controllers/todo_list/todo_list_controller')
+const SwaggerController = () => import('#controllers/swagger_controller')
 
 router.get('/', [HomePageController, 'get'])
 router.get('/home', [HomePageController, 'get']) // Auth middleware should be in controller
@@ -31,3 +32,6 @@ router.post('/logout', [LogoutController, 'respond'])
 router.get('/todo-lists/create', [TodoListCreatePageController, 'get'])
 router.post('/todo-lists/create', [TodoListCreatePageController, 'post'])
 router.get('/api/todo-lists', [TodoListController, 'get'])
+
+router.get('/swagger', [SwaggerController, 'getSwaggerUi'])
+router.get('/swagger/*', [SwaggerController, 'getSwaggerFile'])
