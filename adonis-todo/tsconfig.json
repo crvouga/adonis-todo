@@ -4,7 +4,14 @@
     "rootDir": "./",
     "outDir": "./build",
     "module": "ESNext",
-    "moduleResolution": "bundler"
+    "moduleResolution": "bundler",
+    "skipLibCheck": true,
+    "allowJs": true,
+    "moduleDetection": "force",
+    "resolveJsonModule": true,
+    "allowArbitraryExtensions": false,
+    "allowImportingTsExtensions": true,
+    "noEmit": true
   },
   "exclude": ["./inertia/**/*", "node_modules", "build"]
 }
